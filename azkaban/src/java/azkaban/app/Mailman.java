@@ -22,6 +22,7 @@ import java.util.Properties;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.AddressException;
@@ -57,8 +58,22 @@ public class Mailman {
         props.put("mail.host", _mailHost);
         props.put("mail.user", _mailUser);
         props.put("mail.password", _mailPassword);
+        
+        if(_mailHost.indexOf("smtp.gmail.com")>=0)
+        {
+        	props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory"); 
+        	props.setProperty("mail.smtp.socketFactory.fallback", "false"); 
+        	props.setProperty("mail.smtp.port", "465"); 
+        	props.setProperty("mail.smtp.socketFactory.port", "465"); 
+        	props.setProperty("mail.smtp.auth", "true");
+        	props.setProperty("mail.smtp.quitwait", "false");
+        }
 
-        Session session = Session.getDefaultInstance(props);
+        Session session = Session.getDefaultInstance(props,new javax.mail.Authenticator() 
+		{
+			protected PasswordAuthentication getPasswordAuthentication()
+			{ return new PasswordAuthentication(_mailUser,_mailPassword);	}
+		});		
         Message message = new MimeMessage(session);
         InternetAddress from = new InternetAddress(fromAddress == null? "dolores.umbridge@azkaban.com" : fromAddress, false);
         message.setFrom(from);
