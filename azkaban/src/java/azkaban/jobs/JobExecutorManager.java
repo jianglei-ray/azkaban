@@ -220,7 +220,7 @@ public class JobExecutorManager {
                                 String senderAddress,
                                 List<String> emailList) {
         if((emailList == null || emailList.isEmpty()) && jobFailureEmail != null)
-            emailList = Arrays.asList(jobFailureEmail);
+            emailList = Arrays.asList(jobFailureEmail.split(","));
 
         if(emailList != null && mailman != null) {
             try {
@@ -294,7 +294,7 @@ public class JobExecutorManager {
                                   String senderAddress,
                                   List<String> emailList) {
         if((emailList == null || emailList.isEmpty()) && jobSuccessEmail != null) {
-            emailList = Arrays.asList(jobSuccessEmail);
+            emailList = Arrays.asList(jobSuccessEmail.split(","));
         }
 
         if(emailList != null && mailman != null) {
