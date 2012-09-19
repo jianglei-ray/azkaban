@@ -206,8 +206,8 @@ public class AzkabanApplication
 				        		_allFlows, 
 				        		_jobManager, 
 				        		_mailer, 
-				        		failureEmail, 
 				        		successEmail,
+				        		failureEmail,
 				        		schedulerThreads
 				        	);
         
